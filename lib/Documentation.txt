@@ -1,0 +1,167 @@
+------------------------------------------------------------Modules-----------------------------------------------------
+
+------------------------------------------>Globals<----------------------------------------------------
+    For having a Global variable 
+        isOn if a person is Healthy it is set to True and change the App Bar color
+        Primary Theme colors BlueShade and GreenShade
+
+---------------------------------------------->UI<---------------------------------------------------
+
+    ----------------------------->HomePageNavigation<-------------------------------------
+        For Navigating Different Pages using BottomNavigationBar:
+            1.Home
+            2.Mood
+            3.AccountPage
+            4.Sleep
+        class _MyHomePageState:
+
+            int _currentIndex=0
+            List _screens=[IntroPage(),Mood(),HealthCard(),Sleep(),];
+
+            methods:
+                void changeColor() - To change color on Tap in BottomNavigationBar
+                void _updateIndex(int value) - setState((){ change current index accordingly })
+            
+            Floating Action Button: to change global value isOn if healthy/not 
+
+
+    --------------------------------->Pages<-----------------------------------------------
+    ---------------->IntroPage<---------------
+        
+        Components:
+            1.TabCard
+                - To Fetch Medicine Details from FireBase present in "Tablets">Current User>"TabDetails" and
+                display it in the form of card 
+                - Has an icon onPressed delete the current tablet from DataBase
+                - Wrapped in an Inkwell on pressed Navitages to TabInfo 
+            2.TabInfo
+                -Contains Detail Information of Tablet in the form of a Table 
+                -Has a constructor TabContainer
+                    to initialize a new Tablet when a new Tablet is registered
+                        String TabName
+                        String ExpiryDate
+                        String Need 
+                        String TabCount
+                        String Dosage 
+            3.LifeAnimation
+                Using liquid progress indicator package displays some animation 
+                which represents current expected life of a person
+        Home.dart
+            Combining above three Components along with an icon
+            onTap():
+                TabRegistration page to register new Tablet 
+
+
+
+
+    ---------------->Parameters<---------------
+        Components:
+
+            1.Weather
+                config.dart - contains Api Key from OpenWeatherApi to fetch Weather from current
+                location using lattitude and longitude
+
+                geo_locator package we can get the current location i.e latitude and longitude
+                using _determinePosition()
+
+                contains a Map<String,Dynamic> d which stores weather details from json
+
+                class : WeatherAppState
+                methods:
+                    _fetchData(): fetch data using http.get(<Parsed Url>) to get dat in the for of json
+                    getTemperature()
+                    getHumidity()
+                    getPressure()
+                    getDescription()
+
+            2.Food
+                Takes input of food items using a TextEditing Controller
+                Using Chip Widget to display food items 
+                
+                class InputTagsState:
+                methods:
+                    1. static List<String> getFood()
+                    2. static void clearAll()
+            
+            3.Activites
+                
+                Using GridView builder to show all the activites in the form of a Grid
+                class : IconsGridState
+                    List<Color> iconColors;
+                    List<String> items = [];
+                when color is black it adds item to items list 
+                when onTap() method on icon is called it changes back it's color and removes item 
+            
+
+        Mood.dart:
+            Using above 3 files and  
+            Creates an object of class HealthFactors and sends Data using sendData() method
+        
+
+
+    ------------>HealthCard.dart<--------------
+        displays the health and all parameters of the user on a particular day fetching data 
+        from firebase and isplays using StreamBuilder<QuerySnapshot>
+    
+    
+    ------------>Sleep.dart<---------------------
+        
+
+
+
+    ------------>Account.dart<-----------------
+        displays the basic details of the user
+        and Profile picture of the user 
+        class:AccountPageState
+        methods:
+            pickImage() - To get image from gallery of user device using image_picker package 
+            uploadImage() - To send image to firebase Firestore
+            signOut()
+            cancelAllNotifs()
+    
+        
+
+
+
+
+
+
+
+
+----------------------------->DataBase<----------------------------
+
+------Firebase_User.dart----- 
+
+    We have Firebase_User class to initialize a new FireBase user with empty UserEmail and user_Email and user_Id
+    Methods:
+        SignUp(String email,String password)
+        Login(String email,String password)
+        String getUserId()
+
+
+ ------TabRegistration-------
+
+    Here we have send the data to firebase by using private constructor 
+    newTablet 
+    Has a drop down to choose the dosage type
+        1. Set alarm for once in a day(Hard coded to 8pm)
+        2. Set alarm twice a day(Hard coded to 1pm and 8pm)
+        3. Set alarm thrice a day(9am 1pm 8pm)
+        4. Provided with Custom option - But not yet handeled
+
+        BUG: There can be chance of getting aarm continuously need to implement stop
+        functionality
+
+--------HealthFactors-------------
+
+    Sends all the health factors to FireBase
+        String ?temperature;
+        String ?pressure;
+        String ?humidity;
+        String ?description;
+        List<String> ?food;
+        List<String> ?activites;
+        bool ?isHealthy;
+
+
+
