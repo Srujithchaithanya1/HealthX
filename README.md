@@ -1,4 +1,4 @@
-![image](https://github.com/Srujithchaithanya1/HealthX/assets/84473285/91212ce7-9fbf-4aa1-bd96-fc5fe94b9927)# healthx
+# healthx
 
 A new Flutter project.
 
